@@ -25,9 +25,9 @@ Vagrant.configure("2") do |config|
       sudo apt-get update -y
       sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
       sudo usermod -a -G docker vagrant
-      docker login -u gimnemo --password-stdin < /vagrant/env/docker_token
+      docker login -u gimnemo --password-stdin < /vagrant/.vagrant/env/docker_token
       docker volume create --label service=web --label creater=nemo web_src_vol
-      sudo cp -r /vagrant/htdocs/* /var/lib/docker/volumes/web_src_vol/_data/
+      sudo cp -r /vagrant/.vagrant/htdocs/* /var/lib/docker/volumes/web_src_vol/_data/
       docker run -d -p 8080:80 -v web_src_vol:/usr/local/apache2/htdocs --name web-server1 httpd
     SCRIPT
   end
