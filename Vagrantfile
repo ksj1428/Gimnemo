@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
     sshfs.vm.provision "shell", inline: <<-SCRIPT
       sudo useradd -m -s /bin/bash sshfs
       echo "sshfs:qwe@123" | sudo chpasswd
-      git clone https://github.com/AnByoungHyun/static-web-template.git
+      git clone https://github.com/ksj1428/static-web-template.git
       sudo mkdir /home/sshfs/htdocs
       sudo cp -r static-web-template/* /home/sshfs/htdocs/
       sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' \
