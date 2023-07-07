@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     end
     sshfs.vm.network "forwarded_port", guest: 8080, host: 80
     sshfs.vm.network "private_network", ip: "192.168.33.250"
-    ubuntu.vm.provision "shell", inline: <<-SCRIPT
+    sshfs.vm.provision "shell", inline: <<-SCRIPT
       sudo apt-get update -y
       sudo apt-get install -y ca-certificates curl gnupg
       sudo install -m 0755 -d /etc/apt/keyrings
