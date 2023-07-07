@@ -3,6 +3,20 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
 
+  config.vm.define "sshfs" do |sshfs|
+    sshfs.vm.hostname = "sshfs-server"
+    sshfs.vm.provider "virtualbox" do |vb|
+      vb.name = "sshfs-server"
+      vb.cpus = 1
+      vb.memory = 2048
+    end
+    sshfs.vm.network "private_network", ip: "192.168.33.20"
+    sshfs.vm.provision "shell", inline: <<-SCRIPT
+     sudo useradd -m -s /bin/bash sshfs
+     echo sshfs:qwe@123 | sudo chpasswd
+    SCRIPT
+  end
+
   config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.hostname = "mz-server"
     ubuntu.vm.provider "virtualbox" do |vb|
@@ -26,9 +40,11 @@ Vagrant.configure("2") do |config|
       sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
       sudo usermod -a -G docker vagrant
       docker login -u gimnemo --password-stdin < /vagrant/env/docker_token
+
+
       docker volume create --label service=web --label creater=nemo web_src_vol
       sudo cp -r /vagrant/htdocs/* /var/lib/docker/volumes/web_src_vol/_data/
-      docker run -d -p 8080:80 -v web_src_vol:/usr/local/apache2/htdocs --name web-server1 httpd
+      docker run -d -p 8080:80 -v web_src_vol:/usr/share/nginx/html --name web-server nginx
     SCRIPT
   end
 end
