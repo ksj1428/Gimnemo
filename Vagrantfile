@@ -3,14 +3,14 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
 
-  config.vm.define "sshfs" do |sshfs|
-    sshfs.vm.hostname = "sshfs-server"
+  config.vm.define "docker" do |sshfs|
+    sshfs.vm.hostname = "docker-server"
     sshfs.vm.provider "virtualbox" do |vb|
-      vb.name = "sshfs-server"
-      vb.cpus = 1
-      vb.memory = 2048
+      vb.name = "docker-server"
+      vb.cpus = 2
+      vb.memory = 8192
     end
-    sshfs.vm.network "private_network", ip: "192.168.33.20"
+    sshfs.vm.network "private_network", ip: "192.168.33.200"
     sshfs.vm.provision "shell", inline: <<-SCRIPT
      sudo useradd -m -s /bin/bash sshfs
      echo sshfs:qwe@123 | sudo chpasswd
@@ -18,14 +18,14 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "ubuntu" do |ubuntu|
-    ubuntu.vm.hostname = "mz-server"
+    ubuntu.vm.hostname = "sshfs-server"
     ubuntu.vm.provider "virtualbox" do |vb|
-      vb.name = "docker-server"
-      vb.cpus = 4
-      vb.memory = 8192
+      vb.name = "sshfs-server"
+      vb.cpus = 1
+      vb.memory = 4096
     end
     ubuntu.vm.network "forwarded_port", guest: 8080, host: 80
-    ubuntu.vm.network "private_network", ip: "192.168.33.10"
+    ubuntu.vm.network "private_network", ip: "192.168.33.250"
     ubuntu.vm.provision "shell", inline: <<-SCRIPT
       sudo apt-get update -y
       sudo apt-get install -y ca-certificates curl gnupg
