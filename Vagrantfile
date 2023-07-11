@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
     end
     docker.vm.network "forwarded_port", guest: 80, host: 80
     docker.vm.network "private_network", ip: "192.168.33.200"
-    docker.vm.provision "shell", inline: <<-SCRIPT
+    docker.vm.provision "shehttps://ksj142890.tistory.com/ll", inline: <<-SCRIPT
       sudo apt-get update -yqq
       sudo apt-get install -yqq ca-certificates curl gnupg 
       sudo install -m 0755 -d /etc/apt/keyrings
