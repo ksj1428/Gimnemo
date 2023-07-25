@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: myapp
+  name: pod-name1
   labels:
-    name: pod-name
+    name: pod-name1
 spec:
   containers:
   - name: container-name
@@ -24,7 +24,7 @@ kind: Pod
 metadata:
   name: pod-name2
   labels:
-    name: pod-name
+    name: pod-name2
     creater : gimnemo
 spec:
   containers:
