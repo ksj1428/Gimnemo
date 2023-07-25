@@ -14,5 +14,27 @@ spec:
         cpu: "500m"
     ports:
       - containerPort: 80
-  imagepullsecrets:
+  imagePullsecrets:
   -name: docker-pull-secret
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-name2
+  labels:
+    name: pod-name
+    creater : gimnemo
+spec:
+  containers:
+  - name: apache-container
+    image: httpd:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "250m"
+    ports:
+      - containerPort: 80
+  imagePullSecrets:
+  - name: docker-pull-secret
