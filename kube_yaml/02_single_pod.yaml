@@ -15,5 +15,5 @@ spec:
         cpu: "250m"
     ports:
       - containerPort: 80
-  imagepullsecrets:
+  imagePullSecrets:
   - name: docker-pull-secret
