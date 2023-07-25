@@ -15,5 +15,11 @@ spec:
         cpu: "500m"
     ports:
       - containerPort: 80
+  - name: alpine
+    image: alpine:latest
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu : "500m"
   imagePullSecrets:
   - name: docker-pull-secret
