@@ -17,6 +17,10 @@ spec:
       - containerPort: 80
   - name: alpine
     image: alpine:latest
+    args:
+    - /bin/sh
+    - -c
+    - "while ture; do echo 'running'; sleep; 10; done"
     resources:
       limits:
         memory: "256Mi"
