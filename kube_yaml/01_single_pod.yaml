@@ -7,10 +7,12 @@ metadata:
 spec:
   containers:
   - name: container-name
-    image: quay.io/nginx:latest
+    image: nginx:latest
     resources:
       limits:
         memory: "128Mi"
         cpu: "500m"
     ports:
       - containerPort: 80
+  imagepullsecrets:
+  -name: docker-pull-secret
