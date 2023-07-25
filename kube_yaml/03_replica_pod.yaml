@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset
+spec:
+  replicas: 3 # Pod 수
+  selector: # 복제 할 템블릿 정보를 선택하기 위해 사용
+    matchLabels: # 메타데이터.라벨 정보와 일치하는 템블릿 선택하여 복제
+     app: web
+  template:
+    metadata:
+      name: replica-template
+      labels:
+        app: web  # 이 라벨이 일치해야함.
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+      - name: docker-pull-secret          
