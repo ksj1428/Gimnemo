@@ -9,6 +9,11 @@ spec:
   containers:
   - name: apache-container
     image: httpd:latest
+    env:
+      - name: hello
+        value: hi
+      - name: username
+        value: tester
     resources:
       limits:
         memory: "128Mi"

@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: replicaset
+  labels:
+    type : aaa
 spec:
-  replicas: 3 # Pod 수
+  replicas: 0 # Pod 수
   selector: # 복제 할 템블릿 정보를 선택하기 위해 사용
     matchLabels: # 메타데이터.라벨 정보와 일치하는 템블릿 선택하여 복제
      app: web
