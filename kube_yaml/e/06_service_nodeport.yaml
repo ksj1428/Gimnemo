@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cluster-service
+  name: nodeport-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: web
+    name: pod-nodeport
   ports:
   - port: 80
     targetPort: 80
@@ -14,10 +15,10 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod
+  name: nginx-pod1
   labels:
-    name: nginx-pod
     app: web
+    name: pod-nodeport
 spec:
   containers:
   - name: nginx
@@ -35,10 +36,10 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: httpd-pod
+  name: httpd-pod1
   labels:
-    name: httpd-pod
     app: web
+    name: pod-nodeport
 spec:
   containers:
   - name: httpd
@@ -51,6 +52,3 @@ spec:
       - containerPort: 80
   imagePullSecrets:
   - name: docker-pull-secret
-
-
-
