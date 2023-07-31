@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: second-app
+  name: first-app
   labels:
-    name: second-app
+    app: first-app
 spec:
   containers:
-  - name: second-app
-    image: httpd:latest
+  - name: first-app
+    image: nginx:latest
     resources:
-     limits:
+      limits:
         memory: "128Mi"
         cpu: "500m"
     ports:
@@ -20,15 +20,15 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: first-app
+  name: second-app
   labels:
-    name: first-app
+    app: second-app
 spec:
   containers:
-  - name: first-app
-    image: nginx:latest
+  - name: second-app
+    image: httpd:latest
     resources:
-     limits:
+      limits:
         memory: "128Mi"
         cpu: "500m"
     ports:
@@ -36,7 +36,7 @@ spec:
   imagePullSecrets:
   - name: docker-pull-secret
 ---
-piVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: first-service
@@ -58,7 +58,7 @@ spec:
   - port: 80
     targetPort: 80
 ---
-apiVersion: v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: myingress
@@ -68,6 +68,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
     kubernetes.io/ingress.class: nginx
 spec:
+ # ingressClassName: nginx
   rules:
   - host: "example.com"
     http:
@@ -85,8 +86,7 @@ spec:
           service:
             name: second-service
             port: 
-              number: 80       
----
+              number: 80
 
 # 인그레스(ingress)
 

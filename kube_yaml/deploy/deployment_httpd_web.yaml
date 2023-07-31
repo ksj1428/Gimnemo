@@ -9,7 +9,7 @@ spec:
       version: "2.0"
       server: httpd
       date: "2023-07"
-  replicas: 3
+  replicas: 0
   template:
     metadata:
       labels:
