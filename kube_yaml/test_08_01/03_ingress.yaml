@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: second-app
+  labels:
+    app: second-app
+spec:
+  containers:
+  - name: second-app
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  imagePullSecrets:
+  - name: docker-pull-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: static-web-template
+spec:
+  selector:
+    name: static-web-ttt
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: default-web-httpd
+spec:
+  selector:
+    app: second-app
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myingress
+  labels:
+    name: myingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: "kube.home.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/main"
+        backend:
+          service:
+            name: static-web-template
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/test"
+        backend:
+          service:
+            name: default-web-httpd
+            port: 
+              number: 80

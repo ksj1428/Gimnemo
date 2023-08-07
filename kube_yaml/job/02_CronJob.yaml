@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata: 
+  name: mycronjob
+spec:
+  #         "분 시 일 월 요일"
+  schedule: "0  *  *  *  *"
+  successfulJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cronjob-container
+            image: alpine
+            command: ["/bin/sh","-c","echo 'job Running'"]
+          restartPolicy: OnFailure
+
+
+# restartPolicy: OnFailure
+# 실패했을 때 재시작해라, never 은 실패하면 걍 종료해라.
+
+# successfulJobsHistoryLimit: 5 
+# 성공내역 히스토리남기는거 제한을 5개까지 늘리는 명령어
+# schedule: "*  *  *  *  *"
+# 1분 간격으로 계속 실행하게 된다.
+ #         "분 시 일 월 요일"
+ # schedule: "0  *  *  *  *"
+ # 매 0분마다 시작 1시 0분, 2시 0분, 3시 0분....
+ # schedule: "/10  *  *  *  *"
+ # 10분 마다 시작 1시 10분, 1시 20분, 1시 30분...
+ # schedule: "0  7,12,23  *  *  *"
+ # 매 0분마다인데 7시0분, 12시0분, 23시0분에 실행하겠다.
+ # schedule: "*  *  *  *  1-5"
+ # 0:일요일, 1:월요일, 2:화요일...6:토요일
+ # schedule: "0  7,12,23  *  *  1-5"
+ # 월~금요일, 매월 매일 7시0분, 12시0분, 23시0분에 실행해라.
+
+ # 이런식으로 주기적으로 일정시간 간격으로 로그수집하려고 할 때사용

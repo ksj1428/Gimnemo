@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-apache
+spec:
+  selector:
+    matchLabels:
+      app: deployment-apache
+      server: httpd
+  replicas: 3    
+  template:
+    metadata:
+      labels:
+        app: deployment-apache
+        server: httpd
+    spec:
+      containers:
+      - name: deployment-container-apache
+        image: httpd:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: docker-pull-secret

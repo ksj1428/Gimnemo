@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-volume-pod
+  labels:
+    app: deployment_apache
+    server: httpd
+    name: static-web-ttt
+
+spec:
+  containers:
+  - name: nfs-volume-pod-container
+    image: httpd:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    volumeMounts:
+    - name: volume1
+      mountPath: /var/www/html
+  volumes: 
+  - name: volume1
+    nfs:
+      path: /mnt/nfs_share1
+      server: 192.168.10.14
+      readOnly: true
+  imagePullSecrets:
+  - name: docker-pull-secret

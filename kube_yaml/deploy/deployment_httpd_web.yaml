@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-httpd-static-web
-spec:
+spec: # Deployment 정보들? replicas 추가된?
   selector:
     matchLabels:
       app: static-web
@@ -17,11 +17,11 @@ spec:
         version: "2.0"
         server: httpd
         date: "2023-07"
-    spec:
+    spec: # pod 정보들?
       containers:
       - name: httpd-static-web
-        image: gimnemo/httpd:2.0
-        resources:
+        image: gimnemo/httpd:2.0 
+        resources:  
           limits:
             memory: "128Mi"
             cpu: "500m"
